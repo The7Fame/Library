@@ -1,0 +1,16 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+    <a href="{% url 'home' %}"><button class="btn__home">{% trans 'Home' %}</button></a>
+	<div id="user_profile">
+		<h3>{% trans 'Edit Profile' %} {{ profile.user.username }}</h3>
+		<div>
+			<form action="" method="post">
+				{% csrf_token %}
+				{{ form.as_p }}
+                <button class="edit_btn" type="submit">{% trans 'Submit' %}</button>
+			</form>
+
+		</div>
+	</div>
+{% endblock %}

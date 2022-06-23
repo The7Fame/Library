@@ -1,0 +1,12 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+<a href="{% url 'home' %}"><button class="btn__home">{% trans 'Home' %}</button></a>
+<p style="padding: 10px;font-weight: bold; font-size: 24px">{{ one_author }}</p>
+    {% if one_author.photo %}
+    <img src="{{ one_author.photo.url }}" style="width: 156px; height: 156px">
+    {% endif %}
+    <p style="padding-left: 20px; border-bottom: 1px solid gainsboro; margin-bottom: 10px">{% trans 'The author was born in' %} {{ one_author.date_of_birthday }}</p>
+<a href="{% url 'delete_author' pk=one_author.pk %}"><button class="btn_delete">{% trans 'Delete' %}</button></a>
+<a href="{% url 'update_author' pk=one_author.pk %}"><button class="btn_update">{% trans 'Update' %}</button></a>
+{% endblock %}

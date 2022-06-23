@@ -1,0 +1,14 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+{% if form.errors %}
+	<p>{% trans 'Something went wrong. Try again.' %}</p>
+{% endif %}
+	<div>
+		<form method="post">
+			{% csrf_token %}
+            {{ form.as_p }}
+			<button class="btn_create" type="submit">{% trans 'Create' %}</button>
+		</form>
+	</div>
+{% endblock %}

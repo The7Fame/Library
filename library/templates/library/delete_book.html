@@ -1,0 +1,11 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+<a href="{% url 'home' %}"><button class="btn__home">{% trans 'Home' %}</button></a>
+<p>{% trans 'Are u sure? U wanna delete this book below' %}</p>
+    <p>{{ book }}</p>
+<form action="" method="POST">
+  {% csrf_token %}
+  <button class="btn_delete" type="submit" value="Submit">{% trans 'Delete' %}</button>
+</form>
+{% endblock %}

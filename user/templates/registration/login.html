@@ -1,0 +1,18 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+<h4>{%  trans 'Put in your login and password' %}</h4>
+{% if form.errors %}
+	<p>Something went wrong. Try again</p>
+{% endif %}
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+
+<p style="margin-bottom: 10px">{% trans 'Login'%}: {{ form.username }}</p>
+    <p>{% trans 'Password' %}: {{ form.password }}</p>
+
+<button class="edit_btn" type="submit">{% trans 'Log in'  %}</button>
+
+</form>
+
+{% endblock %}

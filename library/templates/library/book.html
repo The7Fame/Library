@@ -1,0 +1,12 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+<a href="{% url 'home' %}"><button class="btn__home">{% trans 'Home' %}</button></a>
+<p style="padding: 10px;font-weight: bold; font-size: 24px">{{ one_book.title }}</p>
+    {% if one_book.photo %}
+    <img src="{{ one_book.photo.url }}" style="width: 156px; height: 156px">
+    {% endif %}
+    <p style="padding-left: 20px; border-bottom: 1px solid gainsboro; margin-bottom: 10px">{% trans 'This book about' %} {{ one_book.description }}</p>
+<a href="{% url 'delete_book' pk=one_book.pk %}"><button class="btn_delete">{% trans 'Delete' %}</button></a>
+<a href="{% url 'update_book' pk=one_book.pk %}"><button class="btn_update">{% trans 'Update' %}</button></a>
+{% endblock %}

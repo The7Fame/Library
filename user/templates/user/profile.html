@@ -1,0 +1,13 @@
+{% extends 'library/base.html' %}
+{% load i18n %}
+{% block content %}
+    <a href="{% url 'home' %}"><button class="btn__home">{% trans 'Home' %}</button></a>
+	<div>
+		<h3>{% trans 'Profile' %} {{ profile.user.username }}</h3>
+		<p>{% trans 'Login' %}: {{ profile.user.username }}</p>
+		<p>{% trans 'Name' %}: {{ profile.user.first_name }}</p>
+		<p>{% trans 'Surname' %}: {{ profile.user.last_name }}</p>
+		<p>{% trans 'City' %}: {{ profile.city }}</p>
+		<p>{% trans 'Date of birthday' %}: {{ profile.date_of_birth }}</p>
+	</div>
+{% endblock %}

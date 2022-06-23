@@ -1,0 +1,210 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+
+        .container{
+            width: 820px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: cornflowerblue;
+        }
+
+        a{
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        p{
+            margin: 0;
+            padding: 0;
+        }
+
+        ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav{
+            border-bottom: 1px solid gainsboro;
+        }
+
+        .nav__item:not(:last-child){
+            margin-right: 40px;
+        }
+
+        button{
+            border: none;
+            font: inherit;
+            padding: 6px;
+            background-color: azure;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        button:hover{
+            background-color: linen;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        body{
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .nav__link{
+            font-weight: bold;
+        }
+
+        .nav__link:hover{
+            color: wheat;
+            transition: color 0.3s ease-in-out;
+        }
+        .btn__profile{
+            position: relative;
+            top: -32px;
+            padding: 3px 7px;
+            margin-right: 10px;
+        }
+        .btn__home{
+            padding: 3px 7px;
+            position: absolute;
+            top:19px;
+            background-color: azure;
+        }
+
+        .book__link:hover, .author__link:hover{
+            color:wheat;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .btn_update:hover{
+            background-color: darkseagreen;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn_delete:hover{
+            background-color: coral;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn_logout{
+            position: relative;
+            top:-36px;
+        }
+
+        .btn_logout:hover{
+            background-color: coral;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn_i:hover{
+            background-color: yellowgreen;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .edit_btn{
+            padding: 3px 10px;
+        }
+
+        .edit_btn:hover{
+            background-color: darkseagreen;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .btn_create:hover{
+            background-color: darkseagreen;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn_c:hover{
+            background-color: darkseagreen;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn_edit{
+            position: relative;
+            top:-36px;
+        }
+
+        .btn_edit:hover{
+            background-color: darkseagreen;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn_reg:hover{
+            background-color: darkseagreen;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn{
+            position: absolute;
+            left: 40%;
+            top: 38%;
+        }
+
+        .lang__form{
+            display: flex;
+            flex-direction: column ;
+            position: absolute;
+            top: 60px;
+            right: 100px;
+        }
+
+        .btn_lang{
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<div class="container">
+<body>
+<form class="lang__form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select style="background-color: inherit; margin-bottom: 10px; border: none" name="language">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
+        {% endfor %}
+    </select>
+    <button class="btn_lang" type="submit">{% trans 'Translate' %}</button>
+</form>
+<nav class="nav">
+    <ul style=" display: flex;
+                justify-content: flex-end;">
+        <li class="nav__item">
+           <a class="nav__link" href="{% url 'books' %}">{% trans 'Books' %}</a>
+        </li>
+        <li class="nav__item">
+           <a class="nav__link" href="{% url 'authors' %}">{% trans 'Authors' %}</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'profile_edit' request.user.id %}"><button class="btn_edit" type="submit">
+            {% trans 'Edit profile' %}</button></a>
+        <a href="{% url 'logout' %}"><button class="btn_logout" type="submit">{% trans 'Log out' %}</button></a>
+    <p style="text-align: center; padding: 50px; font-weight: bold; font-size: 40px">{% trans 'Welcome to our Library' %}, {{ user }}</p>
+    {% else %}
+     <p style="text-align: center; padding: 50px; font-weight: bold; font-size: 40px">{% trans 'Welcome to our Library' %}</p>
+        <div class="btn">
+						<a href="{% url 'register' %}"><button class="btn_reg" type="submit">{% trans 'Register' %}</button></a>
+        <a href="{% url 'login' %}"><button class="btn_i" type="submit">{% trans 'LogIn' %}</button></a>
+				{% endif %}
+    </div>
+{% endblock %}
+</body>
+</div>
+</html>
